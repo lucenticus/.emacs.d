@@ -226,8 +226,11 @@
 
 (eval-after-load 'company
   '(add-to-list 'company-backends 'company-irony))
-
-
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-omnisharp))
+(add-hook 'csharp-mode-hook 'omnisharp-mode)
+(setq omnisharp-server-executable-path "~/Git/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe")
+(setq omnisharp-curl-executable-path "/usr/bin/curl")
 (projectile-global-mode)
 (setq projectile-enable-caching t)
 (setq projectile-completion-system 'helm)
@@ -343,3 +346,13 @@
 
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'compilation-mode-hook 'ansi-color-for-comint-mode-on)
+
+(setq
+ ;; use gdb-many-windows by default
+ gdb-many-windows t
+
+ ;; Non-nil means display source file containing the main routine at startup
+ gdb-show-main t
+ )
+
+(load-file "rtags/src/rtags.el")
