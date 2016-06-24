@@ -67,8 +67,8 @@
 (add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
 (put 'dired-find-alternate-file 'disabled nil)
 
-(setq tab-width 2)
-(setq-default c-basic-offset 2)
+(setq tab-width 4)
+(setq-default c-basic-offset 4)
 (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80))
 (setq indent-tabs-mode nil)
 (setq require-final-newline nil)
@@ -125,7 +125,7 @@
 
 (ede-cpp-root-project "LLVM"
 		      :name "LLVM project"
-		      :file "~/Git/ML/llvm/CMakeLists.txt"
+		      :file "~/Git/llvm/CMakeLists.txt"
  		      :include-path '("/include"
  				      "/tools/clang/include"
  				      "/tools/clang/lib/StaticAnalyzer")
@@ -206,7 +206,7 @@
 ;;             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
 ;;               (ggtags-mode 1))))
 
-(add-hook 'after-init-hook #'global-flycheck-mode)
+;;(add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;;(require 'irony)
 ;;(add-hook 'c++-mode-hook 'irony-mode)
@@ -390,7 +390,7 @@
   (call-interactively (if (use-rtags t) 'rtags-imenu 'idomenu)))
 
 (define-key c-mode-base-map (kbd "M-.") (function tags-find-symbol-at-point))
-(define-key c-mode-base-map (kbd "M-,") (function tags-find-references-at-point))
+(define-key c-mode-base-map (kbd "M-,") (function rtags-location-stack-back))
 (define-key c-mode-base-map (kbd "M-;") (function tags-find-file))
 (define-key c-mode-base-map (kbd "C-.") (function tags-find-symbol))
 (define-key c-mode-base-map (kbd "C-,") (function tags-find-references))
