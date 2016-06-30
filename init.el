@@ -13,11 +13,10 @@
 (global-set-key (kbd "<f7>") 'compile)
 (global-set-key (kbd "M-`") 'other-frame)
 
-;; make cursor movement keys under right hand's home-row.
-(global-set-key (kbd "s-i") 'previous-line)
-(global-set-key (kbd "s-j") 'backward-char)
-(global-set-key (kbd "s-k") 'next-line)
-(global-set-key (kbd "s-l") 'forward-char)
+(global-set-key (kbd "s-i") 'windmove-up)
+(global-set-key (kbd "s-j") 'windmove-left)
+(global-set-key (kbd "s-k") 'windmove-down)
+(global-set-key (kbd "s-l") 'windmove-right)
 
 (global-set-key (kbd "s-u") 'backward-word)
 (global-set-key (kbd "s-o") 'forward-word)
@@ -35,6 +34,7 @@
 (global-set-key (kbd "<f2>") 'bs-show)
 
 (setq x-select-enable-clipboard t)
+(setq-default indent-tabs-mode nil)
 
 ;; Dired
 (require 'dired)
@@ -67,12 +67,12 @@
 (add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
 (put 'dired-find-alternate-file 'disabled nil)
 
-(setq tab-width 4)
-(setq-default c-basic-offset 4)
-(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80))
-(setq indent-tabs-mode nil)
-(setq require-final-newline nil)
-(setq indent-line-function 'insert-tab)
+;; (setq tab-width 4)
+;; (setq-default c-basic-offset 4)
+;; (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80))
+;; (setq indent-tabs-mode nil)
+;; (setq require-final-newline nil)
+;; (setq indent-line-function 'insert-tab)
 
 (setq python-mode-hook
     (function (lambda ()
@@ -94,6 +94,7 @@
     (function (lambda ()
                 (setq indent-tabs-mode nil)
                 (setq c-indent-level 4))))
+
 
 
 (add-hook 'w3-parse-hooks 'w3-tidy-page)
@@ -173,7 +174,7 @@
       (ecb-methods-buffer-name 0.1848341232227488 . 0.3018867924528302)
       (ecb-history-buffer-name 0.1848341232227488 . 0.1509433962264151)))))
  '(ecb-options-version "2.40")
- '(ecb-source-path (quote ("~/Git/clang-gerrit/")))
+ '(ecb-source-path (quote ("~/Git/coreclr/")))
  '(inhibit-startup-screen t))
 
 (require 'git)
@@ -182,7 +183,7 @@
 (fci-mode nil)
 (setq fci-rule-width 1)
 (setq fci-rule-use-dashes 1)
-(setq fci-rule-column 80)
+(setq fci-rule-column 120)
 (setq fci-rule-color "darkred")
 (add-hook 'c-mode-hook 'fci-mode)
 (add-hook 'c++-mode-hook 'fci-mode)
@@ -230,7 +231,7 @@
 (eval-after-load 'company
   '(add-to-list 'company-backends 'company-omnisharp))
 (add-hook 'csharp-mode-hook 'omnisharp-mode)
-(setq omnisharp-server-executable-path "~/Git/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe")
+(setq omnisharp-server-executable-path "/media/epavlov/builds/Git/omnisharp-server/OmniSharp/bin/Release/OmniSharp.exe")
 (setq omnisharp-curl-executable-path "/usr/bin/curl")
 (projectile-global-mode)
 (setq projectile-enable-caching t)
