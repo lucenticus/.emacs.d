@@ -1,3 +1,4 @@
+
 ;;;
 (global-set-key (kbd "C-z") 'undo) ; 【Ctrl+z】
 ;; Mac style redo
@@ -119,18 +120,32 @@
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
 
+(setq package-list '(
+                     ecb
+                     helm
+                     projectile
+                     git
+                     srefactor
+                     fill-column-indicator
+                     autopair
+                     iedit
+                     ws-trim
+                     function-args
+                     smex
+                     ))
 
 (package-initialize)
 
-(global-ede-mode 1)
+; fetch the list of packages available 
+(unless package-archive-contents
+  (package-refresh-contents))
 
-(ede-cpp-root-project "LLVM"
-		      :name "LLVM project"
-		      :file "~/Git/llvm/CMakeLists.txt"
- 		      :include-path '("/include"
- 				      "/tools/clang/include"
- 				      "/tools/clang/lib/StaticAnalyzer")
-)
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
+
+
+(global-ede-mode 1)
 
 
 (put 'dired-find-alternate-file 'disabled nil)
@@ -202,32 +217,6 @@
         (lambda ()
                 (define-key c-mode-map [(ctrl tab)] 'complete-tag)))
 
-;; (add-hook 'c-mode-common-hook
-;;           (lambda ()
-;;             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-;;               (ggtags-mode 1))))
-
-;;(add-hook 'after-init-hook #'global-flycheck-mode)
-
-;;(require 'irony)
-;;(add-hook 'c++-mode-hook 'irony-mode)
-;;(add-hook 'c-mode-hook 'irony-mode)
-;;(add-hook 'objc-mode-hook 'irony-mode)
-
-
-;; replace the `completion-at-point' and `complete-symbol' bindings in
-;; irony-mode's buffers by irony-mode's function
-;; (defun my-irony-mode-hook ()
-;;   (define-key irony-mode-map [remap completion-at-point]
-;;     'irony-completion-at-point-async)
-;;   (define-key irony-mode-map [remap complete-symbol]
-;;     'irony-completion-at-point-async))
-;; (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-;;(eval-after-load 'company
-;;  '(add-to-list 'company-backends 'company-irony))
-
 (eval-after-load 'company
   '(add-to-list 'company-backends 'company-omnisharp))
 (add-hook 'csharp-mode-hook 'omnisharp-mode)
@@ -268,7 +257,7 @@
 (add-to-list 'company-c-headers-path-system "/usr/local/include")
 (add-to-list 'company-c-headers-path-system "/usr/include")
 
-(semantic-mode 1)
+;;(semantic-mode 1)
 
 (require 'function-args)
 (fa-config-default)
@@ -357,8 +346,7 @@
  gdb-show-main t
  )
 
-(load-file "~/.emacs.d/rtags/src/rtags.el")
-
+(load-file "/Users/lucenticus/.emacs.d/rtags/src/rtags.el")
 
 (require 'rtags)
 (defun use-rtags (&optional useFileManager)
@@ -409,3 +397,6 @@
 (setq rtags-autostart-diagnostics t)
 (push 'company-rtags company-backends)
 (setq rtags-completions-enabled t)
+(add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
+(add-hook 'c++-mode-common-hook 'rtags-start-process-unless-running)
+(setq rtags-path "/usr/local/bin")
